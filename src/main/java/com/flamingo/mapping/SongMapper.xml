@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flamingo.dao.SongMapper">
+  <resultMap id="BaseResultMap" type="com.flamingo.pojo.Song">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="song_name" jdbcType="VARCHAR" property="songName" />
+    <result column="singer_id" jdbcType="INTEGER" property="singerId" />
+    <result column="album_id" jdbcType="INTEGER" property="albumId" />
+    <result column="mv" jdbcType="VARCHAR" property="mv" />
+    <result column="music" jdbcType="VARCHAR" property="music" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, song_name, singer_id, album_id, mv, music
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_song
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_song
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.flamingo.pojo.Song">
+    insert into t_song (id, song_name, singer_id, 
+      album_id, mv, music)
+    values (#{id,jdbcType=INTEGER}, #{songName,jdbcType=VARCHAR}, #{singerId,jdbcType=INTEGER}, 
+      #{albumId,jdbcType=INTEGER}, #{mv,jdbcType=VARCHAR}, #{music,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.flamingo.pojo.Song">
+    insert into t_song
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="songName != null">
+        song_name,
+      </if>
+      <if test="singerId != null">
+        singer_id,
+      </if>
+      <if test="albumId != null">
+        album_id,
+      </if>
+      <if test="mv != null">
+        mv,
+      </if>
+      <if test="music != null">
+        music,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="songName != null">
+        #{songName,jdbcType=VARCHAR},
+      </if>
+      <if test="singerId != null">
+        #{singerId,jdbcType=INTEGER},
+      </if>
+      <if test="albumId != null">
+        #{albumId,jdbcType=INTEGER},
+      </if>
+      <if test="mv != null">
+        #{mv,jdbcType=VARCHAR},
+      </if>
+      <if test="music != null">
+        #{music,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flamingo.pojo.Song">
+    update t_song
+    <set>
+      <if test="songName != null">
+        song_name = #{songName,jdbcType=VARCHAR},
+      </if>
+      <if test="singerId != null">
+        singer_id = #{singerId,jdbcType=INTEGER},
+      </if>
+      <if test="albumId != null">
+        album_id = #{albumId,jdbcType=INTEGER},
+      </if>
+      <if test="mv != null">
+        mv = #{mv,jdbcType=VARCHAR},
+      </if>
+      <if test="music != null">
+        music = #{music,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flamingo.pojo.Song">
+    update t_song
+    set song_name = #{songName,jdbcType=VARCHAR},
+      singer_id = #{singerId,jdbcType=INTEGER},
+      album_id = #{albumId,jdbcType=INTEGER},
+      mv = #{mv,jdbcType=VARCHAR},
+      music = #{music,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
